@@ -2,12 +2,19 @@ import os
 import sys
 import base64
 import time
+import urllib.request
 
 # Flask
 from flask import Flask, redirect, url_for, request, render_template, Response, jsonify, redirect
 from flask_restful import Api, Resource, reqparse
 from werkzeug.utils import secure_filename
 from gevent.pywsgi import WSGIServer
+
+# MongoDB
+from flask_pymongo import PyMongo
+from bson.json_util import dumps
+from bson.objectid import ObjectId
+from flask import jsonify,request
 
 # TensorFlow and tf.keras
 import tensorflow as tf
@@ -22,12 +29,17 @@ import numpy as np
 from util import base64_to_pil
 import cv2
 import werkzeug
+from PIL import Image 
+from numpy import asarray
 
 
 # Declare a flask app
 app = Flask(__name__)
 api = Api(app)
 
+app.config['MONGO_URI'] = "mongodb+srv://avik6028:avik240299@cluster0.ofqrh.mongodb.net/optum?retryWrites=true&w=majority"
+
+mongo = PyMongo(app)
 
 # Model saved with Keras model.save()
 MODEL_PATH = './models/datty.h5'
@@ -119,9 +131,64 @@ class Prediction_API(Resource):
         return jsonify(retMap)
 
 
+class Optum_API(Resource):
+
+    def post(self):
+
+        _json = request.json
+        _name = _json['name']
+        _email = _json['email']
+        _bloodgroup = _json['bloodgroup']
+        _status = _json['status']
+        _imgurl = _json['imgurl']
+        _message = ""
+        _result =""
+
+        # Downloading the image from URL
+        url = _imgurl
+        fullfilename = ("./uploads/image.png")
+        urllib.request.urlretrieve(url, fullfilename)
+
+        # Prediction
+        img = Image.open("./uploads/image.png")
+        imwholeg = asarray(img) 
+        preds = model_predict(imwholeg, model)
+        if preds[1]==1:
+            _result = "NORMAL"             # Convert to string
+        else:
+            _result = "COVID"
+
+
+        # Posting in MongoDB
+        if _name and _email and _bloodgroup and _imgurl and request.method == 'POST':
+            id = mongo.db.covid_records.insert({'name':_name,'email': _email,'bloodgroup': _bloodgroup,
+                    'status': _status,'imgurl': _imgurl , 'result': _result})
+            status_code = 200 
+            _message = "Added Successfully to DB"
+        else:
+            status_code = 404
+            _message = "Enter Valid Input"
+            
+
+        # Post Request response
+        retMap = {
+            "Posted to MongoDB" : str(status_code),
+            "Message" : str(_message),
+            "predicted_label": str(_result),
+            "Name": str(_name),
+            "Email": str(_email),
+            "Blood": str(_bloodgroup),
+            "Status": str(_status),
+            "ImgURL": str(_imgurl)
+        }
+
+        return jsonify(retMap)
+
+
 
 
 api.add_resource(Prediction_API, "/api")
+api.add_resource(Optum_API , "/optum")
 
 
 if __name__ == '__main__':
