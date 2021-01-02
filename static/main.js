@@ -42,6 +42,22 @@ var loader = document.getElementById("loader");
 // Main button events
 //========================================================================
 
+function formSub(){   
+
+  if (!resulter.value ) {
+    window.alert("Please select an image and submit before saving.");
+    return;
+  }
+
+  if (!email.value || !fullname.value || !age.value){
+    window.alert("Please fill up the form before saving.");
+    return;
+  }
+  
+  document.getElementById("myForm").submit();
+  window.alert("Your Prediction Details have been saved.");
+}
+
 function submitImage() {
   // action for the submit button
   console.log("submit");
@@ -113,6 +129,8 @@ function predictImage(image) {
       if (resp.ok)
         resp.json().then(data => {
           displayResult(data);
+          document.getElementById("resulter").value = data.result; 
+          document.getElementById("imgb64").value = JSON.stringify(image);  
         });
     })
     .catch(err => {

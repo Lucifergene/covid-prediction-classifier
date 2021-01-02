@@ -2,12 +2,20 @@ import os
 import sys
 import base64
 import time
+import urllib.request
+import datetime
 
 # Flask
 from flask import Flask, redirect, url_for, request, render_template, Response, jsonify, redirect
 from flask_restful import Api, Resource, reqparse
 from werkzeug.utils import secure_filename
 from gevent.pywsgi import WSGIServer
+
+# MongoDB
+from flask_pymongo import PyMongo
+from bson.json_util import dumps
+from bson.objectid import ObjectId
+from flask import jsonify,request
 
 # TensorFlow and tf.keras
 import tensorflow as tf
@@ -22,11 +30,16 @@ import numpy as np
 from util import base64_to_pil
 import cv2
 import werkzeug
-
+from PIL import Image 
+from numpy import asarray 
 
 # Declare a flask app
 app = Flask(__name__)
 api = Api(app)
+
+app.config['MONGO_URI'] = "mongodb+srv://avik6028:avik240299@cluster0.ofqrh.mongodb.net/optum?retryWrites=true&w=majority"
+
+mongo = PyMongo(app)
 
 
 # Model saved with Keras model.save()
@@ -85,6 +98,23 @@ def predict():
 
     return None
 
+class Save_DB(Resource):
+
+    def post(self):
+
+        _name = request.form.get('fullname')
+        _age = request.form.get('age')
+        _email = request.form.get('email')
+        _imgb64 = request.form.get('imgb64')
+        _result = request.form.get('resulter')
+        _timestamp = datetime.datetime.now();
+
+        # Posting in MongoDB
+        if request.method == 'POST':
+            id = mongo.db.prediction_records.insert({'name':_name,'email': _email, 'age': _age, 'encoded_image':_imgb64, 'result': _result, 'timestamp':_timestamp}) 
+
+        return redirect(url_for('index'))
+
 class Prediction_API(Resource):
 
     def post(self):
@@ -122,6 +152,7 @@ class Prediction_API(Resource):
 
 
 api.add_resource(Prediction_API, "/api")
+api.add_resource(Save_DB, "/save")
 
 
 if __name__ == '__main__':

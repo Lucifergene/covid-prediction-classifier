@@ -7,3 +7,6 @@ gevent
 pillow
 h5py
 opencv-python-headless
+flask_pymongo
+dnspython
+urllib3
