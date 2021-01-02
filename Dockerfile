@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest
+FROM tensorflow/tensorflow:2.3.0
 
 ADD requirements.txt /
 RUN pip install -r /requirements.txt &&\
