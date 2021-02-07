@@ -6,7 +6,7 @@
 
 **DockerHub** : avik6028/covid_predictor_flask_cnn:1.0.0
 
-
+The project is a **Computer Aided Diagnostic System** which is used predict whether a person has been infected with **COVID-19**. Currently the reference project does only **classification** between COVID and non-COVID X-Rays using **Modified DenseNet** architectures. This project involves an Web Application, REST API, Dockerhub Container and automated pipeline to deploy COVID Prediction model based on Chest Radiological Images. Containerized Deployment ensures platform independance during deployment.
 
 
 
