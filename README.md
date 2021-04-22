@@ -6,7 +6,7 @@
 
 **DockerHub** : avik6028/covid_predictor_flask_cnn:1.0.0
 
-The project is a **Computer Aided Diagnostic System** which is used to predict whether a person has been infected with **COVID-19**. Currently, the reference project does the only **classification** between COVID and non-COVID X-Rays using Modified DenseNet architectures. This project involves a Web Application, REST API, Dockerhub Container and automated pipeline to deploy COVID Prediction model based on Chest Radiological Images. Containerized Deployment ensures platform independence during deployment.
+The project is a **Computer-Aided Diagnostic System** which is used to predict whether a person has been infected with **COVID-19**. Currently, the reference project does the only **classification** between COVID and non-COVID X-Rays using Modified DenseNet architectures. This project involves a Web Application, REST API, Dockerhub Container and automated pipeline to deploy the COVID Prediction model based on Chest Radiological Images. Containerized Deployment ensures platform independence during deployment.
 
 
 ## Inter-Disciplinary Domains
@@ -31,16 +31,19 @@ The project is a **Computer Aided Diagnostic System** which is used to predict w
 
 ## Market Demand
 
-In the year 2020-21, the most demanded medical test, is the test of **COVID-19** virus. The traditional methods involve collecting samples for **RT-PCR** tests. But this process often give **false negatives** and also takes a long time to predict the result.
+In the year 2020-21, the most demanded medical test, is the test of the **COVID-19** virus. The traditional methods involve collecting samples for **RT-PCR** tests. But this process often gives **false negatives** and also takes a long time to predict the result.
 
-It has been proved by various research works by foreign scientists and researchers that **X-Ray/CT images** can be efficiently used for the detection of COVID-19 virus. It is seen that patients suffering from COVID-19, developed some particular type of lesions in their lungs, which is medically  termed as **Ground-Glass Opacities** **(GGOs)**. These lesions can be easily be seen through Chest X-Ray or CT images.
+It has been proved by various research works by foreign scientists and researchers that **X-Ray/CT images** can be efficiently used for the detection of the COVID-19 virus. It is seen that patients suffering from COVID-19, developed some particular type of lesions in their lungs, which is medically termed as **Ground-Glass Opacities** **(GGOs)**. These lesions can be easily be seen through Chest X-Ray or CT images.
 
-Several researchers have developed various **Deep Learning models** to automatically classify the Radiological images of patients. There are various journal as well as conference papers in this context. Consecutive models have been developed, beating the previous ones in terms of **Accuracy,Precision, F1 score**, etc.
+Several researchers have developed various **Deep Learning models** to automatically classify the Radiological images of patients. There are various journal as well as conference papers in this context. Consecutive models have been developed, beating the previous ones in terms of **Accuracy, Precision, F1 score**, etc.
 
 
 
 ## Screenshots
 
+<img src="https://raw.githubusercontent.com/Lucifergene/covid-prediction-classifier/master/assets/home.jpg">
+<br>
+<img src="https://raw.githubusercontent.com/Lucifergene/covid-prediction-classifier/master/assets/result.jpg">
 
 
 
