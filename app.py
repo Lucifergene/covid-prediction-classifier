@@ -39,6 +39,7 @@ api = Api(app)
 
 app.config['MONGO_URI'] = "mongodb+srv://avik6028:avik240299@cluster0.a93g9.mongodb.net/covidclassifier?retryWrites=true&w=majority"
 
+
 mongo = PyMongo(app)
 
 
