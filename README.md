@@ -43,7 +43,7 @@ Several researchers have developed various **Deep Learning models** to automatic
 
 <img src="https://raw.githubusercontent.com/Lucifergene/covid-prediction-classifier/master/assets/home.jpg">
 <br><br>
-<img src="https://raw.githubusercontent.com/Lucifergene/covid-prediction-classifier/master/assets/result.jpg">
+<img src="https://raw.githubusercontent.com/Lucifergene/covid-prediction-classifier/master/assets/result.jpg"> 
 
 
 
