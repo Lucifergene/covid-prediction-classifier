@@ -4,12 +4,17 @@ import base64
 import time
 import urllib.request
 import datetime
+import logging
+
 
 # Flask
 from flask import Flask, redirect, url_for, request, render_template, Response, jsonify, redirect
 from flask_restful import Api, Resource, reqparse
 from werkzeug.utils import secure_filename
 from gevent.pywsgi import WSGIServer
+
+# Metrics
+from prometheus_flask_exporter import PrometheusMetrics
 
 # MongoDB
 from flask_pymongo import PyMongo
@@ -33,9 +38,17 @@ import werkzeug
 from PIL import Image 
 from numpy import asarray 
 
+
+logging.basicConfig(level=logging.INFO)
+logging.info("Setting LOGLEVEL to INFO")
+
+
 # Declare a flask app
 app = Flask(__name__)
 api = Api(app)
+metrics = PrometheusMetrics(app)
+
+metrics.info("app_info", "App Info, this can be anything you want", version="1.0.0")
 
 app.config['MONGO_URI'] = "mongodb+srv://avik6028:avik240299@cluster0.a93g9.mongodb.net/covidclassifier?retryWrites=true&w=majority"
 
@@ -75,6 +88,12 @@ def model_predict(img, model):
 def index():
     # Main page
     return render_template('index.html')
+
+
+@app.route('/health', methods=['GET'])
+def health():
+    # Health Check page
+    return "OK",200
 
 
 @app.route('/predict', methods=['GET', 'POST'])
@@ -148,6 +167,16 @@ class Prediction_API(Resource):
         }
 
         return jsonify(retMap)
+
+@app.errorhandler(404)
+def not_found(error=None):
+    message = {
+        'status':404,
+        'message':'Not Found' + request.url
+    }
+    resp = jsonify(message)
+    resp.status_code = 404
+    return resp
 
 
 

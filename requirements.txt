@@ -10,3 +10,4 @@ opencv-python-headless==4.2.0.34
 flask_pymongo==2.3.0
 dnspython==1.16.0
 urllib3==1.25.10
+prometheus-flask-exporter==0.18.6
