@@ -130,7 +130,7 @@ class Save_DB(Resource):
 
         # Posting in MongoDB
         if request.method == 'POST':
-            id = mongo.db.prediction_records.insert({'name':_name,'email': _email, 'age': _age, 'encoded_image':_imgb64, 'result': _result, 'timestamp':_timestamp}) 
+            id = mongo.db.prediction_records.insert_one({'name':_name,'email': _email, 'age': _age, 'encoded_image':_imgb64, 'result': _result, 'timestamp':_timestamp}) 
 
         return redirect(url_for('index'))
 
