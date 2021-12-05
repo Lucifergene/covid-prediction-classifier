@@ -50,8 +50,7 @@ metrics = PrometheusMetrics(app)
 
 metrics.info("app_info", "App Info, this can be anything you want", version="1.0.0")
 
-app.config['MONGO_URI'] = "mongodb+srv://avik6028:avik240299@cluster0.a93g9.mongodb.net/covidclassifier?retryWrites=true&w=majority"
-
+app.config['MONGO_URI'] = os.environ.get('MONGO_URL')
 
 mongo = PyMongo(app)
 
