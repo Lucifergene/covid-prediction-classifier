@@ -28,3 +28,4 @@ instance/
 
 !uploads/README.md
 !models/README.md
+models/datty.h5
