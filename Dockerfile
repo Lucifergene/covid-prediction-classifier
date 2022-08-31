@@ -1,7 +1,7 @@
 FROM tensorflow/tensorflow:2.3.0
 
 ADD requirements.txt /
-RUN pip install -r /requirements.txt &&\
+RUN pip3 install -r /requirements.txt &&\
     apt-get update -y &&\
     apt-get install -y p7zip-full
     

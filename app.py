@@ -16,12 +16,6 @@ from gevent.pywsgi import WSGIServer
 # Metrics
 from prometheus_flask_exporter import PrometheusMetrics
 
-# MongoDB
-from flask_pymongo import PyMongo
-from bson.json_util import dumps
-from bson.objectid import ObjectId
-from flask import jsonify,request
-
 # TensorFlow and tf.keras
 import tensorflow as tf
 from tensorflow import keras
@@ -49,11 +43,6 @@ api = Api(app)
 metrics = PrometheusMetrics(app)
 
 metrics.info("app_info", "App Info, this can be anything you want", version="1.0.0")
-
-app.config['MONGO_URI'] = os.environ.get('MONGO_URL')
-
-mongo = PyMongo(app)
-
 
 # Model saved with Keras model.save()
 MODEL_PATH = './models/datty.h5'
@@ -117,23 +106,6 @@ def predict():
 
     return None
 
-class Save_DB(Resource):
-
-    def post(self):
-
-        _name = request.form.get('fullname')
-        _age = request.form.get('age')
-        _email = request.form.get('email')
-        _imgb64 = request.form.get('imgb64')
-        _result = request.form.get('resulter')
-        _timestamp = datetime.datetime.now();
-
-        # Posting in MongoDB
-        if request.method == 'POST':
-            id = mongo.db.prediction_records.insert_one({'name':_name,'email': _email, 'age': _age, 'encoded_image':_imgb64, 'result': _result, 'timestamp':_timestamp}) 
-
-        return redirect(url_for('index'))
-
 class Prediction_API(Resource):
 
     def post(self):
@@ -181,7 +153,6 @@ def not_found(error=None):
 
 
 api.add_resource(Prediction_API, "/api")
-api.add_resource(Save_DB, "/save")
 
 
 if __name__ == '__main__':
