@@ -9,9 +9,7 @@ git clone https://github.com/Lucifergene/covid-prediction-classifier.git
 cd covid-prediction-classifier/
 sudo yum install -y python3
 pip3 install tensorflow==2.3.0
-pip3 uninstall protobuf
-pip3 install protobuf==3.20.*
-sudo pip install -r requirements.txt
+pip3 install -r requirements.txt
 sudo yum install -y p7zip
 cd models
 7za e datty.7z.001
